@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spring Frolic V Country Songbook</title>
+    <title>90s Country Songbook</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(135deg, #5BA3C7 0%, #66B266 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             color: #2c2c2c;
             line-height: 1.6;
             height: 100vh;
@@ -26,7 +26,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #66C266 0%, #DAA520 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,7 +47,7 @@
         }
 
         .password-box h1 {
-            color: #2E8B57;
+            color: #8B4513;
             margin-bottom: 10px;
             font-size: 2em;
         }
@@ -69,7 +69,7 @@
         .password-box button {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #66B266 0%, #5BA3C7 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -108,7 +108,7 @@
         }
 
         .sidebar-header {
-            background: linear-gradient(135deg, #66C266 0%, #DAA520 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             color: white;
             padding: 20px;
             text-align: center;
@@ -136,8 +136,8 @@
             flex: 1;
             padding: 8px;
             background: white;
-            border: 2px solid #66B266;
-            color: #2E8B57;
+            border: 2px solid #D2691E;
+            color: #8B4513;
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.85em;
@@ -146,12 +146,12 @@
         }
 
         .filter-btn:hover {
-            background: #66B266;
+            background: #D2691E;
             color: white;
         }
 
         .filter-btn.active {
-            background: linear-gradient(135deg, #66B266 0%, #5BA3C7 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             color: white;
         }
 
@@ -168,10 +168,10 @@
         .category-header {
             font-size: 0.85em;
             font-weight: bold;
-            color: #2E8B57;
+            color: #8B4513;
             padding: 5px 10px;
             background: #f9f9f9;
-            border-left: 4px solid #66B266;
+            border-left: 4px solid #D2691E;
             margin-bottom: 5px;
         }
 
@@ -187,14 +187,14 @@
 
         .song-item:hover {
             background: #f0f0f0;
-            border-left-color: #DAA520;
+            border-left-color: #D2691E;
             transform: translateX(5px);
         }
 
         .song-item.active {
-            background: linear-gradient(135deg, #66B266 0%, #5BA3C7 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             color: white;
-            border-left-color: #2E8B57;
+            border-left-color: #8B4513;
         }
 
         .song-item-title {
@@ -234,10 +234,10 @@
         }
 
         .content-header {
-            background: linear-gradient(135deg, #5BA3C7 0%, #66B266 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             color: white;
             padding: 20px 30px;
-            border-bottom: 3px solid #5BA3C7;
+            border-bottom: 3px solid #D2691E;
         }
 
         .content-header h2 {
@@ -274,7 +274,7 @@
         }
 
         .welcome-message h2 {
-            color: #2E8B57;
+            color: #8B4513;
             font-size: 2em;
             margin-bottom: 15px;
         }
@@ -295,7 +295,7 @@
         }
 
         .theory-summary h3 {
-            color: #2E8B57;
+            color: #8B4513;
             margin-bottom: 10px;
         }
 
@@ -304,14 +304,14 @@
             padding: 10px;
             background: white;
             border-radius: 5px;
-            border-left: 3px solid #5BA3C7;
+            border-left: 3px solid #D2691E;
         }
 
         .chord-content {
             background: #fafafa;
             padding: 20px;
             border-radius: 10px;
-            border: 2px solid #66B266;
+            border: 2px solid #D2691E;
         }
 
         .chord-content pre {
@@ -324,15 +324,15 @@
         }
 
         .theory-analysis {
-            background: #FFF8B8;
+            background: #fff9e6;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
-            border-left: 4px solid #66B266;
+            border-left: 4px solid #D2691E;
         }
 
         .theory-analysis h4 {
-            color: #2E8B57;
+            color: #8B4513;
             margin-bottom: 10px;
         }
 
@@ -370,114 +370,13 @@
 
         .song-list::-webkit-scrollbar-thumb,
         .content-body::-webkit-scrollbar-thumb {
-            background: #66B266;
+            background: #D2691E;
             border-radius: 10px;
         }
 
         .song-list::-webkit-scrollbar-thumb:hover,
         .content-body::-webkit-scrollbar-thumb:hover {
-            background: #2E8B57;
-        }
-
-        .home-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85em;
-            font-weight: bold;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .home-btn:hover {
-            background: white;
-            color: #2E8B57;
-        }
-
-        .filter-row {
-            display: flex;
-            padding: 10px;
-            gap: 5px;
-            background: #f5f5f5;
-        }
-
-        .filter-row:first-of-type {
-            border-bottom: 1px solid #ddd;
-        }
-
-        .filter-row:last-of-type {
-            border-bottom: 2px solid #ddd;
-        }
-
-        .filter-label {
-            display: flex;
-            align-items: center;
-            font-size: 0.75em;
-            font-weight: bold;
-            color: #2E8B57;
-            padding: 0 5px;
-            min-width: 45px;
-        }
-
-        .print-btn {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.3);
-            color: white;
-            border: 2px solid white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: bold;
-            transition: all 0.2s;
-            display: none;
-        }
-
-        .print-btn:hover {
-            background: white;
-            color: #2E8B57;
-        }
-
-        .print-btn.visible {
-            display: block;
-        }
-
-        .content-header {
-            position: relative;
-        }
-
-        @media print {
-            .sidebar,
-            .content-header,
-            .print-btn,
-            .theory-analysis {
-                display: none !important;
-            }
-
-            .app-container {
-                padding: 0;
-            }
-
-            .main-content {
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            .chord-content {
-                border: none;
-                padding: 0;
-            }
-
-            .chord-content pre {
-                font-size: 12px;
-            }
+            background: #8B4513;
         }
     </style>
 </head>
@@ -485,7 +384,7 @@
     <!-- Password Protection Overlay -->
     <div class="password-overlay" id="passwordOverlay">
         <div class="password-box">
-            <h1>🌸 Spring Frolic V</h1>
+            <h1>🎸 Country Songbook</h1>
             <p>Enter password to access</p>
             <input type="password" id="passwordInput" placeholder="Enter password">
             <button onclick="checkPassword()">Unlock</button>
@@ -498,23 +397,14 @@
         <!-- Left Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <h1>🌸 Spring Frolic V</h1>
-                <p>17 Country Classics for Spring 2026</p>
-                <button class="home-btn" onclick="showHome()">🏠 Home</button>
+                <h1>🎸 Country Songbook</h1>
+                <p>17 Classic Hits with Theory Analysis</p>
             </div>
 
-            <div class="filter-row">
-                <span class="filter-label">Prog:</span>
-                <button class="filter-btn active" data-filter-type="progression" onclick="filterSongs('all', 'progression')">All</button>
-                <button class="filter-btn" data-filter-type="progression" onclick="filterSongs('I-IV-V', 'progression')">I-IV-V</button>
-                <button class="filter-btn" data-filter-type="progression" onclick="filterSongs('I-V-vi-IV', 'progression')">I-V-vi-IV</button>
-            </div>
-            <div class="filter-row">
-                <span class="filter-label">Key:</span>
-                <button class="filter-btn active" data-filter-type="key" onclick="filterSongs('all', 'key')">All</button>
-                <button class="filter-btn" data-filter-type="key" onclick="filterSongs('G', 'key')">G</button>
-                <button class="filter-btn" data-filter-type="key" onclick="filterSongs('D', 'key')">D</button>
-                <button class="filter-btn" data-filter-type="key" onclick="filterSongs('C', 'key')">C</button>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterSongs('all')">All</button>
+                <button class="filter-btn" onclick="filterSongs('I-IV-V')">I-IV-V</button>
+                <button class="filter-btn" onclick="filterSongs('I-V-vi-IV')">I-V-vi-IV</button>
             </div>
 
             <div class="song-list" id="songList">
@@ -525,8 +415,8 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="content-header" id="contentHeader">
-                <h2>🌸 Welcome to Spring Frolic V</h2>
-                <span class="artist">Select a song to view chords & theory analysis</span>
+                <h2>Welcome to Your Songbook</h2>
+                <span class="artist">Select a song from the left to view chords</span>
             </div>
             <div class="content-body" id="contentBody">
                 <div class="welcome-message">
@@ -643,19 +533,6 @@ And the girls next door dress up like movie stars
 G  Em   F#m   G     A         D
 Mmm mm - mm - mm, I love this bar
 
-       D                A
-We got cowboys, we got truckers
-G                        D
-Broken-hearted fools and suckers
-       D                A
-We got hustlers, we got fighters
-G                   A
-Early birds and all-nighters
-        Bm                  A            G
-And the veterans talk about their battle scars
-G  Em    F#m  G     A         D
-Mmm mm - mm - mm, I love this bar
-
 [Chorus]
             Bm
 I love this bar
@@ -694,22 +571,12 @@ Dm     Em        F        G
 I only wanted to get your attention but
 C                    F
 You over looked me somehow
-Dm              Em       F             G
-Besides you had too many boyfriends to mention and
-C                      G    (pause)
-I played my guitar too loud
-                  C
-How do ya like me now
 
 [Chorus]
                   F                       C
 How do ya like me now, now that I'm on my way
                     G                   C
-You still think I'm crazy standing here today
-                    F                            C
-I couldn't make you love me but I always dreamed about
-               G                        C
-Living in your radio, How do ya like me now`
+You still think I'm crazy standing here today`
             },
             {
                 id: 'song4',
@@ -736,20 +603,12 @@ F
 Down by the river on a Friday night
 C                         G         C
 A pyramid of cans in the pale moonlight
-F
-Talking 'bout cars and dreaming 'bout women
-D7                                     G
-Never had a plan just a livin' for the minute
 
 [Chorus]
 C
 Yeah way down yonder on the Chattahoochee
                                       G       C
-Never knew how much that muddy water meant to me
-C
-But I learned how to swim and I learned who I was
-                         G            C
-A lot about livin' and a little 'bout love`
+Never knew how much that muddy water meant to me`
             },
             {
                 id: 'song5',
@@ -765,26 +624,12 @@ A lot about livin' and a little 'bout love`
 She's been playing that room on the strip for ten years in Vegas
          G                     C        D             G D C
 Every night she looks in the mirror but she only ages
-             G                                 C                 D
-She's been reading 'bout Nashville and all the records that everybody's
-         G D C
-buying
-              G                  C        D            G D C
-Say's I'm a simple girl myself grew up on Long Island
-        Em               D
-So she packs her bags to try her hand
-      Em           D
-Says this might be my last chance
 
 [Chorus]
              G      C              D
 She's gone country, look at them boots
              G      C              D
-She's gone country, back to her roots
-             G        C            D
-She's gone country, a new kind of suit
-             Em        N.C.
-She's gone country, here she comes`
+She's gone country, back to her roots`
             },
             {
                 id: 'song6',
@@ -795,26 +640,13 @@ She's gone country, here she comes`
                 progression: 'I-V-vi-IV',
                 theory: 'Key: G | I-V-IV-vi',
                 analysis: 'Another G major I-IV-V-vi progression. The Em (vi) and A (V/ii) add emotional depth. The A chord functions as a secondary dominant, briefly tonicizing D.',
-                chords: `[Intro]
-G
-
-[Verse 1]
+                chords: `[Verse 1]
 G                   D
  It was painted red, the stripe was white
         C
 It was eighteen feet from the bow to the stern light
 G                    D
  Second hand from a dealer in Atlanta
-   C
-I rode up with daddy when he went there to get 'er
-G              D
- Put on a shine, put on a motor
- C
-Built out of love and made for the water
-G                            D
- Ran her for years 'til the transom got rotten
-   C                             C  N.C.
-A piece of my childhood that'll never be forgotten
 
 [Chorus]
       G             D
@@ -822,17 +654,7 @@ It was just an old plywood boat
         C
 With a seventy-five Johnson with electric choke
 G                  D
- A young boy, two hands on the wheel
-C
- I can't replace the way it made me feel
-           G                      D
-And I would turn her sharp and I'd make it whine
-        C
-He'd say you can't beat the way an old wood boat rides
-Em                             A
- Just a little lake 'cross the Alabama line
-           C               D                 G     D   C   D
-But I was king of the ocean when daddy let me drive`
+ A young boy, two hands on the wheel`
             },
             {
                 id: 'song7',
@@ -846,35 +668,15 @@ But I was king of the ocean when daddy let me drive`
                 chords: `[Verse]
 C
 Hey, hey, good lookin',
-
 Whatcha got cookin'?
 D                   G7                C G7
 How's about cookin' somethin' up with me?
 
 C
 Hey, sweet baby,
-
 Don't you think maybe
          D         G7            C
-We could find us a brand new recipe?
-
-[Bridge]
-        F                  C
-I got a hot-rod Ford and a two-dollar bill
-    F                   C
-And I know a spot right over the hill.
-F                        C
-There's soda pop and the dancin's free,
-          D                    G7
-So if you wanna have fun come along with me.
-
-[Verse]
-C
-Hey, good lookin',
-
-Whatcha got cookin'?
-D                   G7                C G7
-How's about cookin' somethin' up with me?`
+We could find us a brand new recipe?`
             },
             {
                 id: 'song8',
@@ -890,20 +692,12 @@ E                                         A
 Country music singers have always been a real close family,
       B7                                                      E
 But lately some of my kinfolks have disowned a few others and me.
-                              A
-I guess it's because I kind of changed my direction.
-B7                                             E
-Lord, I guess I went and broke their family tradition.
 
 [Chorus]
                                      E                        A
 They get on me and want to know Hank why do you drink? Hank, why do you roll smoke?
 B7                                         E
-Why must you live out the songs that you wrote?
-                    A
-Over and over everybody makes my predictions.
-      B7                                                  E
-So if I get stoned, I'm just carrying on an old family tradition.`
+Why must you live out the songs that you wrote?`
             },
             {
                 id: 'song9',
@@ -919,22 +713,12 @@ A                   E
 All my ex's live in Texas
                  Bm               B7   Bdim  A
 And Texas is the place I'd really love to be
-                    E
-All my ex's live in Texas
-                                     A
-And that's why I hang my hat in Tennessee
 
 [Verse 1]
 A                            Bm
 Rosanna's down in Texarkana, wanted me to push her broom
 E7                                               A
-Sweet Eileen's in Abilene, she forgot I hung the moon
-                            Bm
-And Allison's in Galveston, somehow lost her sanity
-    B7                                         E7
-And Dimples, who now lives in Temple's got the law lookin'
-
-For me`
+Sweet Eileen's in Abilene, she forgot I hung the moon`
             },
             {
                 id: 'song10',
@@ -948,7 +732,6 @@ For me`
                 chords: `[Verse 1]
         C/G
         Last night I dug your picture out from our old dresser drawer
-
         I set it on the table and I talked to it 'til four
                                                F
         I read some old love letters right up 'til the break of dawn
@@ -957,13 +740,7 @@ For me`
 
 [Chorus]
         C/G
-        I'm diggin' up bones, I'm diggin' up bones
-                                          G
-        Exhuming things that better left alone
-            C/G                        F
-        I'm resurrecting memories of a love that's dead and gone
-                C/G                G               C/G
-        Yeah, tonight I'm sittin' alone diggin' up bones`
+        I'm diggin' up bones, I'm diggin' up bones`
             },
             {
                 id: 'song11',
@@ -980,22 +757,14 @@ E   E   E   E
 [Verse 1]
 E                             E
   Out in the country past the city limits sign
-                E                   E
-Well, there's a honky tonk near the county line
     A                          A                       E     E
 The joint starts jumpin' every night when the sun goes down
          B               B
 They got whiskey, women, music and smoke
-     B                     B                A       E      E
-It's where all the cowboy folk go to boot scootin' boogie
 
 [Chorus]
       A                    A                     E
-Yeah, heel, toe, do-si-do, c'mon baby, let's go boot scootin'
-      A                     A                                  E      E
-Woah, Cadillac, black jack, baby meet me out back, we're gonna boogie
-    B                      B                 A       E       E
-Oh, get down, turn around, go to town, boot scootin' boogie`
+Yeah, heel, toe, do-si-do, c'mon baby, let's go boot scootin'`
             },
             {
                 id: 'song12',
@@ -1013,12 +782,6 @@ Blame it all on my roots
 I showed up in boots
     Bm
 And ruined your black tie affair
-    E
-The last one to know
-    E7
-The last one to show
-          A
-I was the last one you thought you'd see there
 
 [Chorus]
        A
@@ -1026,17 +789,7 @@ I was the last one you thought you'd see there
           A
 Where the whiskey drowns and the beer chases
     Bm
-My blues away
-         E
-And I'll be okay
-A
-I'm not big on social graces
-           A                   A7
-Think I'll slip on down to the oasis
-    Bm              E
-Oh, I've got friends
-        A
-In low places`
+My blues away`
             },
             {
                 id: 'song13',
@@ -1052,30 +805,14 @@ In low places`
 The preacher man says it's the end of time
         G                         D
 And the Mississippi River she's a-goin' dry
-    D                            Am7
-The interest is up and the stock market's down
-        G                      D
-And you only get mugged if you go down town
- D                        Am7
-I live back in the woods, you see
-   G                          D
-My woman and the kids and the dogs and me
         D                      Am7
 I got a shotgun, a rifle and a four wheel drive
       G           Am7    D
 And a country boy can survive
-Am7           G       D
-Country folks can survive
 
 [Pre-Chorus]
             G                           F
-Because you can't starve us out and you can't make us run
-       C                          G
-'Cause we're them ole boys raised on shotguns
-G                F
-We say grace and we say ma'am
-       C                  G
-If you ain't into that we don't give a damn`
+Because you can't starve us out and you can't make us run`
             },
             {
                 id: 'song14',
@@ -1089,30 +826,16 @@ If you ain't into that we don't give a damn`
                 chords: `[Verse 1]
         G
 Well, I got my first truck when I was three
-        G
-Drove a hundred thousand miles on my knees
        C
 Hauled marbles and rocks and thought twice before
            G
 I hauled a Barbie Doll bed for the girl next door
-             D                          D7
-She tried to pay me with a kiss and I began to understand
-         G  N.C.                                G
-There's something women like about a pickup man
 
 [Chorus]
         C
 You can set my truck on fire and roll it down a hill
       G
-And I still wouldn't trade it for a Coupe De Ville
-         C
-I got an eight-foot bed that never has to be made
-          D                                    D7
-You know, if it weren't for trucks we wouldn't have tailgates
-      C
-I met all my wives in traffic jams
-              G  N.C.                     D*    D*  G
-There's just somethin' women like about a pickup man`
+And I still wouldn't trade it for a Coupe De Ville`
             },
             {
                 id: 'song15',
@@ -1136,9 +859,7 @@ Two days past eighteen
     Em      D      C
     I...... cried, never gonna hold the hand of another guy,
     G
-    too young for him they told her,
-    D
-    waiting for the love of the travelin' soldier.`
+    too young for him they told her`
             },
             {
                 id: 'song16',
@@ -1154,16 +875,10 @@ Two days past eighteen
 Who doesn't know what I'm talking about
  D                G                  D
 Who's never left home, who's never struck out
-            G                        D
-To find a dream and a life of their own
-   G                         A
-A place in the clouds, a foundation of stone
 
 [Chorus]
          D     Em    G    A  D        Em            G      A
-She needs wide open spaces    Room to make her big mistakes
-         D Em    G        A              D    Em G A
-She needs  new faces She knows the high stakes`
+She needs wide open spaces    Room to make her big mistakes`
             },
             {
                 id: 'song17',
@@ -1235,7 +950,7 @@ Into the wild blue`
 
                 categorySongs.forEach(song => {
                     html += `
-                        <div class="song-item" onclick="selectSong('${song.id}')" data-progression="${song.progression}" data-key="${song.key}">
+                        <div class="song-item" onclick="selectSong('${song.id}')" data-progression="${song.progression}">
                             <div class="song-item-title">${song.title}</div>
                             <div class="song-item-artist">${song.artist}</div>
                             <div class="song-item-theory">${song.theory}</div>
@@ -1263,7 +978,6 @@ Into the wild blue`
                 <h2>${song.title}</h2>
                 <span class="artist">${song.artist}</span>
                 <div class="theory-badge">${song.theory}</div>
-                <button class="print-btn visible" onclick="printSong()">🖨️ Print</button>
             `;
 
             // Update body
@@ -1283,133 +997,37 @@ Into the wild blue`
             document.getElementById('contentBody').scrollTop = 0;
         }
 
-        let currentFilters = {
-            progression: 'all',
-            key: 'all'
-        };
-
-        function filterSongs(filter, filterType) {
-            // Update filter state
-            currentFilters[filterType] = filter;
-
-            // Update button states for this filter type
-            document.querySelectorAll(`.filter-btn[data-filter-type="${filterType}"]`).forEach(btn => {
+        function filterSongs(filter) {
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.currentTarget.classList.add('active');
 
-            // Filter songs based on both filters
+            // Filter songs
             const songItems = document.querySelectorAll('.song-item');
             songItems.forEach(item => {
-                let showItem = true;
-
-                // Check progression filter
-                if (currentFilters.progression !== 'all') {
+                if (filter === 'all') {
+                    item.style.display = 'block';
+                } else {
                     const progression = item.getAttribute('data-progression');
-                    if (!progression.includes(currentFilters.progression)) {
-                        showItem = false;
+                    if (progression.includes(filter)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
                     }
                 }
-
-                // Check key filter
-                if (currentFilters.key !== 'all') {
-                    const key = item.getAttribute('data-key');
-                    if (!key.includes(currentFilters.key)) {
-                        showItem = false;
-                    }
-                }
-
-                item.style.display = showItem ? 'block' : 'none';
             });
 
             // Hide empty categories
             document.querySelectorAll('.song-category').forEach(cat => {
                 const visibleSongs = cat.querySelectorAll('.song-item[style*="display: block"], .song-item:not([style*="display: none"])');
-                if (visibleSongs.length === 0) {
+                if (filter !== 'all' && visibleSongs.length === 0) {
                     cat.style.display = 'none';
                 } else {
                     cat.style.display = 'block';
                 }
             });
-        }
-
-        function showHome() {
-            // Clear active song
-            document.querySelectorAll('.song-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            // Reset filters
-            currentFilters = { progression: 'all', key: 'all' };
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.textContent.includes('All')) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-
-            // Show all songs
-            document.querySelectorAll('.song-item').forEach(item => {
-                item.style.display = 'block';
-            });
-            document.querySelectorAll('.song-category').forEach(cat => {
-                cat.style.display = 'block';
-            });
-
-            // Show welcome screen
-            document.getElementById('contentHeader').innerHTML = `
-                <h2>🌸 Welcome to Spring Frolic V</h2>
-                <span class="artist">Select a song to view chords & theory analysis</span>
-            `;
-
-            document.getElementById('contentBody').innerHTML = `
-                <div class="welcome-message">
-                    <h2>🎵 Music Theory Patterns</h2>
-                    <p>Click any song to see its chords and theory analysis</p>
-
-                    <div class="theory-summary">
-                        <h3>Common Progressions in This Collection:</h3>
-
-                        <div class="progression-group">
-                            <strong>I-IV-V (Classic Country)</strong><br>
-                            <small>10 songs use this or variations</small><br>
-                            • I Should Have Been a Cowboy<br>
-                            • Chattahoochee<br>
-                            • Family Tradition<br>
-                            • Boot Scootin' Boogie<br>
-                            • Pickup Man
-                        </div>
-
-                        <div class="progression-group">
-                            <strong>I-V-vi-IV (Modern Country/Pop)</strong><br>
-                            <small>3 songs use this progression</small><br>
-                            • Gone Country<br>
-                            • Drive (For Daddy Gene)<br>
-                            • I Love This Bar
-                        </div>
-
-                        <div class="progression-group">
-                            <strong>Modal Mixture (Borrowed Chords)</strong><br>
-                            <small>3 songs use chords from parallel minor</small><br>
-                            • How Do You Like Me Now (bVII)<br>
-                            • A Country Boy Can Survive (v)<br>
-                            • Travelin' Soldier (bVII)
-                        </div>
-
-                        <div class="progression-group">
-                            <strong>Keys Used:</strong><br>
-                            <small>G major: 7 songs | D major: 4 songs | C major: 3 songs</small><br>
-                            • Most songs use guitar-friendly open chord keys<br>
-                            • E and A major also appear (2 songs each)
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function printSong() {
-            window.print();
         }
     </script>
 </body>
