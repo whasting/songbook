@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Frolic V Country Songbook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+            color: #2c2c2c;
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #90EE90 0%, #FFD700 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .password-overlay.hidden {
+            display: none;
+        }
+
+        .password-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .password-box h1 {
+            color: #2E8B57;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .password-box p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .password-box button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #98FB98 0%, #87CEEB 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .password-box button:hover {
+            transform: scale(1.05);
+        }
+
+        .error {
+            color: #d32f2f;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            background: linear-gradient(135deg, #90EE90 0%, #FFD700 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .filter-buttons {
+            display: flex;
+            padding: 10px;
+            gap: 5px;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .filter-btn {
+            flex: 1;
+            padding: 8px;
+            background: white;
+            border: 2px solid #98FB98;
+            color: #2E8B57;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #98FB98;
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #98FB98 0%, #87CEEB 100%);
+            color: white;
+        }
+
+        .song-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .song-category {
+            margin-bottom: 20px;
+        }
+
+        .category-header {
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #2E8B57;
+            padding: 5px 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #98FB98;
+            margin-bottom: 5px;
+        }
+
+        .song-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            background: #fafafa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .song-item:hover {
+            background: #f0f0f0;
+            border-left-color: #FFD700;
+            transform: translateX(5px);
+        }
+
+        .song-item.active {
+            background: linear-gradient(135deg, #98FB98 0%, #87CEEB 100%);
+            color: white;
+            border-left-color: #2E8B57;
+        }
+
+        .song-item-title {
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .song-item-artist {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .song-item-theory {
+            font-size: 0.75em;
+            margin-top: 3px;
+            font-family: 'Courier New', monospace;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .song-item.active .song-item-theory {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .content-header {
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+            color: white;
+            padding: 20px 30px;
+            border-bottom: 3px solid #87CEEB;
+        }
+
+        .content-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .content-header .artist {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .theory-badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .content-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .welcome-message h2 {
+            color: #2E8B57;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .welcome-message p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .theory-summary {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .theory-summary h3 {
+            color: #2E8B57;
+            margin-bottom: 10px;
+        }
+
+        .progression-group {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #87CEEB;
+        }
+
+        .chord-content {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #98FB98;
+        }
+
+        .chord-content pre {
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #444;
+            margin: 0;
+        }
+
+        .theory-analysis {
+            background: #FFFACD;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #98FB98;
+        }
+
+        .theory-analysis h4 {
+            color: #2E8B57;
+            margin-bottom: 10px;
+        }
+
+        .theory-analysis p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 40vh;
+            }
+
+            .main-content {
+                flex: 1;
+            }
+        }
+
+        /* Scrollbar styling */
+        .song-list::-webkit-scrollbar,
+        .content-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .song-list::-webkit-scrollbar-track,
+        .content-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .song-list::-webkit-scrollbar-thumb,
+        .content-body::-webkit-scrollbar-thumb {
+            background: #98FB98;
+            border-radius: 10px;
+        }
+
+        .song-list::-webkit-scrollbar-thumb:hover,
+        .content-body::-webkit-scrollbar-thumb:hover {
+            background: #2E8B57;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .home-btn:hover {
+            background: white;
+            color: #2E8B57;
+        }
+
+        .filter-row {
+            display: flex;
+            padding: 10px;
+            gap: 5px;
+            background: #f5f5f5;
+        }
+
+        .filter-row:first-of-type {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .filter-row:last-of-type {
+            border-bottom: 2px solid #ddd;
+        }
+
+        .filter-label {
+            display: flex;
+            align-items: center;
+            font-size: 0.75em;
+            font-weight: bold;
+            color: #2E8B57;
+            padding: 0 5px;
+            min-width: 45px;
+        }
+
+        .print-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.3);
+            color: white;
+            border: 2px solid white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.2s;
+            display: none;
+        }
+
+        .print-btn:hover {
+            background: white;
+            color: #2E8B57;
+        }
+
+        .print-btn.visible {
+            display: block;
+        }
+
+        .content-header {
+            position: relative;
+        }
+
+        @media print {
+            .sidebar,
+            .content-header,
+            .print-btn,
+            .theory-analysis {
+                display: none !important;
+            }
+
+            .app-container {
+                padding: 0;
+            }
+
+            .main-content {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .chord-content {
+                border: none;
+                padding: 0;
+            }
+
+            .chord-content pre {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection Overlay -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box">
+            <h1>🌸 Spring Frolic V</h1>
+            <p>Enter password to access</p>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button onclick="checkPassword()">Unlock</button>
+            <div class="error" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>🌸 Spring Frolic V</h1>
+                <p>17 Country Classics for Spring 2026</p>
+                <button class="home-btn" onclick="showHome()">🏠 Home</button>
+            </div>
+
+            <div class="filter-row">
+                <span class="filter-label">Prog:</span>
+                <button class="filter-btn active" data-filter-type="progression" onclick="filterSongs('all', 'progression')">All</button>
+                <button class="filter-btn" data-filter-type="progression" onclick="filterSongs('I-IV-V', 'progression')">I-IV-V</button>
+                <button class="filter-btn" data-filter-type="progression" onclick="filterSongs('I-V-vi-IV', 'progression')">I-V-vi-IV</button>
+            </div>
+            <div class="filter-row">
+                <span class="filter-label">Key:</span>
+                <button class="filter-btn active" data-filter-type="key" onclick="filterSongs('all', 'key')">All</button>
+                <button class="filter-btn" data-filter-type="key" onclick="filterSongs('G', 'key')">G</button>
+                <button class="filter-btn" data-filter-type="key" onclick="filterSongs('D', 'key')">D</button>
+                <button class="filter-btn" data-filter-type="key" onclick="filterSongs('C', 'key')">C</button>
+            </div>
+
+            <div class="song-list" id="songList">
+                <!-- Songs will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header" id="contentHeader">
+                <h2>🌸 Welcome to Spring Frolic V</h2>
+                <span class="artist">Select a song to view chords & theory analysis</span>
+            </div>
+            <div class="content-body" id="contentBody">
+                <div class="welcome-message">
+                    <h2>🎵 Music Theory Patterns</h2>
+                    <p>Click any song to see its chords and theory analysis</p>
+
+                    <div class="theory-summary">
+                        <h3>Common Progressions in This Collection:</h3>
+
+                        <div class="progression-group">
+                            <strong>I-IV-V (Classic Country)</strong><br>
+                            <small>10 songs use this or variations</small><br>
+                            • I Should Have Been a Cowboy<br>
+                            • Chattahoochee<br>
+                            • Family Tradition<br>
+                            • Boot Scootin' Boogie<br>
+                            • Pickup Man
+                        </div>
+
+                        <div class="progression-group">
+                            <strong>I-V-vi-IV (Modern Country/Pop)</strong><br>
+                            <small>3 songs use this progression</small><br>
+                            • Gone Country<br>
+                            • Drive (For Daddy Gene)<br>
+                            • I Love This Bar
+                        </div>
+
+                        <div class="progression-group">
+                            <strong>Modal Mixture (Borrowed Chords)</strong><br>
+                            <small>3 songs use chords from parallel minor</small><br>
+                            • How Do You Like Me Now (bVII)<br>
+                            • A Country Boy Can Survive (v)<br>
+                            • Travelin' Soldier (bVII)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = 'country2026';
+
+        // Song database with theory analysis
+        const songs = [
+            {
+                id: 'song1',
+                title: 'I Should Have Been a Cowboy',
+                artist: 'Toby Keith',
+                category: 'favorites',
+                key: 'G',
+                progression: 'I-V-IV',
+                theory: 'Key: G | I-V-IV',
+                analysis: 'Classic I-V-IV progression in G major. The quintessential country/rock progression. Uses G (I), D (V), and C (IV). This is the backbone of countless country hits.',
+                chords: `[Intro]
+| G  D    | C  D    | x4
+
+[Verse 1]
+                G     D         C        D          G
+I'll bet you've never heard ole Marshall Dillon say
+    D               C            D               G
+Miss Kitty have you ever thought of running away
+  D          C           D        G
+Settling down, would you marry me
+   D           C                    D             G
+If I asked you twice and begged you pretty please
+       D          C            D         G
+She'd have said yes in a New York minute
+     D                 C
+They never tied the knot
+D                G
+His heart wasn't in it
+ D              C            D
+He just stole a kiss as he rode away
+G          D       C           Cadd9
+He never hung his hat up at Kitty's place
+
+[Chorus]
+                   G      D   C
+I should've been a cowboy
+D                      G        D    C   D
+I should've learned to rope and ride
+G          D            C         D         G        D   C
+Wearing my six-shooter, riding my pony on a cattle drive
+D           G           D     C   D
+Stealing a young girl's heart
+G         D         C
+Just like Gene and Roy
+D             G         D
+Singing those campfire songs
+C      D                G     D  C
+Oh, I should've been a cowboy`
+            },
+            {
+                id: 'song2',
+                title: 'I Love This Bar',
+                artist: 'Toby Keith',
+                category: 'favorites',
+                key: 'D',
+                progression: 'I-V-vi-IV',
+                theory: 'Key: D | I-V-vi-IV',
+                analysis: 'Uses the "pop progression" I-V-vi-IV in D major (D-A-Bm-G). This is one of the most popular progressions in modern music. Also incorporates secondary dominants (E for modulation).',
+                chords: `[Verse 1]
+D               A
+We got winners, we got losers
+G                 D
+Chain smokers and boozers
+       D               A
+We got yuppies, we got bikers
+G                   A
+We got thirsty hitchhikers
+        Bm                    A             G
+And the girls next door dress up like movie stars
+G  Em   F#m   G     A         D
+Mmm mm - mm - mm, I love this bar
+
+[Chorus]
+            Bm
+I love this bar
+                D
+It's my kind of place
+     E                                     A
+Just walkin' through the front door puts a big smile on my face
+             Bm
+It ain't too far
+            D
+Come as you are
+G   Em   F#m   G     A         D
+Mmm mm - mm - mm, I love this bar`
+            },
+            {
+                id: 'song3',
+                title: 'How Do You Like Me Now',
+                artist: 'Toby Keith',
+                category: 'favorites',
+                key: 'G/C',
+                progression: 'I-bVII-IV-v',
+                theory: 'Key: G/C | I-bVII-IV (modal)',
+                analysis: 'Interesting use of modal mixture with F (bVII) borrowed from G mixolydian. This gives it a rock edge. The verse moves between G and C as tonal centers, creating harmonic ambiguity.',
+                chords: `[Verse 1]
+G
+Yeah I was always a crazy one, broke into the stadium
+F
+And I wrote your number on the fifty yard line
+G
+And you were always the perfect one and valedictorian
+F                              C
+So, under your number I wrote "Call for a good time"
+
+[Pre-Chorus]
+Dm     Em        F        G
+I only wanted to get your attention but
+C                    F
+You over looked me somehow
+
+[Chorus]
+                  F                       C
+How do ya like me now, now that I'm on my way
+                    G                   C
+You still think I'm crazy standing here today`
+            },
+            {
+                id: 'song4',
+                title: 'Chattahoochee',
+                artist: 'Alan Jackson',
+                category: 'favorites',
+                key: 'C',
+                progression: 'I-V-IV',
+                theory: 'Key: C | I-V-IV',
+                analysis: 'Pure I-IV-V in C major (C-G-F). The D7 acts as a secondary dominant (V/V) leading back to G. This is textbook country harmony with a classic 12-bar blues influence.',
+                chords: `[Intro]
+C   G   C    C   G   C
+
+[Verse 1]
+C
+Way down yonder on the Chattahoochee
+                       G       C
+It gets hotter than a hoochie coochie
+C
+We laid rubber on the Georgia asphalt
+C                             G         C
+We got a little crazy but we never got caught
+F
+Down by the river on a Friday night
+C                         G         C
+A pyramid of cans in the pale moonlight
+
+[Chorus]
+C
+Yeah way down yonder on the Chattahoochee
+                                      G       C
+Never knew how much that muddy water meant to me`
+            },
+            {
+                id: 'song5',
+                title: 'Gone Country',
+                artist: 'Alan Jackson',
+                category: 'favorites',
+                key: 'G',
+                progression: 'I-V-vi-IV',
+                theory: 'Key: G | I-V-vi-IV',
+                analysis: 'Modern I-V-vi-IV progression (G-D-Em-C). Same as "I Love This Bar" but in G. This progression became ubiquitous in 90s country-pop crossover hits.',
+                chords: `[Verse 1]
+             G                      C         D                  G D C
+She's been playing that room on the strip for ten years in Vegas
+         G                     C        D             G D C
+Every night she looks in the mirror but she only ages
+
+[Chorus]
+             G      C              D
+She's gone country, look at them boots
+             G      C              D
+She's gone country, back to her roots`
+            },
+            {
+                id: 'song6',
+                title: 'Drive (For Daddy Gene)',
+                artist: 'Alan Jackson',
+                category: 'favorites',
+                key: 'G',
+                progression: 'I-V-vi-IV',
+                theory: 'Key: G | I-V-IV-vi',
+                analysis: 'Another G major I-IV-V-vi progression. The Em (vi) and A (V/ii) add emotional depth. The A chord functions as a secondary dominant, briefly tonicizing D.',
+                chords: `[Verse 1]
+G                   D
+ It was painted red, the stripe was white
+        C
+It was eighteen feet from the bow to the stern light
+G                    D
+ Second hand from a dealer in Atlanta
+
+[Chorus]
+      G             D
+It was just an old plywood boat
+        C
+With a seventy-five Johnson with electric choke
+G                  D
+ A young boy, two hands on the wheel`
+            },
+            {
+                id: 'song7',
+                title: "Hey Good Lookin'",
+                artist: 'Hank Williams',
+                category: 'favorites',
+                key: 'C',
+                progression: 'I-V-IV',
+                theory: 'Key: C | I-II-V7-IV',
+                analysis: 'Classic honky-tonk I-V-IV in C. The D (II) is interesting - it functions as a secondary dominant (V/V) creating harmonic tension. Pure vintage country harmony.',
+                chords: `[Verse]
+C
+Hey, hey, good lookin',
+Whatcha got cookin'?
+D                   G7                C G7
+How's about cookin' somethin' up with me?
+
+C
+Hey, sweet baby,
+Don't you think maybe
+         D         G7            C
+We could find us a brand new recipe?`
+            },
+            {
+                id: 'song8',
+                title: 'Family Tradition',
+                artist: 'Hank Williams Jr.',
+                category: 'favorites',
+                key: 'E',
+                progression: 'I-IV-V7',
+                theory: 'Key: E | I-IV-V7',
+                analysis: 'Textbook blues-based I-IV-V7 in E major (E-A-B7). The dominant 7th (B7) creates strong voice leading back to E. This is the foundation of rock, blues, and country.',
+                chords: `[Verse 1]
+E                                         A
+Country music singers have always been a real close family,
+      B7                                                      E
+But lately some of my kinfolks have disowned a few others and me.
+
+[Chorus]
+                                     E                        A
+They get on me and want to know Hank why do you drink? Hank, why do you roll smoke?
+B7                                         E
+Why must you live out the songs that you wrote?`
+            },
+            {
+                id: 'song9',
+                title: 'All My Exes Live in Texas',
+                artist: 'George Strait',
+                category: 'favorites',
+                key: 'A',
+                progression: 'I-V-ii-V7',
+                theory: 'Key: A | I-V-ii-V7',
+                analysis: 'Sophisticated use of ii-V-I jazz progression in A major. The Bm (ii) to E7 (V7) to A (I) is a strong cadential motion. The Bdim is a diminished passing chord.',
+                chords: `[Chorus]
+A                   E
+All my ex's live in Texas
+                 Bm               B7   Bdim  A
+And Texas is the place I'd really love to be
+
+[Verse 1]
+A                            Bm
+Rosanna's down in Texarkana, wanted me to push her broom
+E7                                               A
+Sweet Eileen's in Abilene, she forgot I hung the moon`
+            },
+            {
+                id: 'song10',
+                title: "Diggin' Up Bones",
+                artist: 'Randy Travis',
+                category: 'favorites',
+                key: 'C',
+                progression: 'I-V-IV',
+                theory: 'Key: C | I-V-IV',
+                analysis: 'Simple but effective I-IV-V progression in C major. The C/G indicates a pedal tone bass note (G) under the C chord, adding harmonic richness and traditional country flavor.',
+                chords: `[Verse 1]
+        C/G
+        Last night I dug your picture out from our old dresser drawer
+        I set it on the table and I talked to it 'til four
+                                               F
+        I read some old love letters right up 'til the break of dawn
+              C/G                G               C/G
+        Yeah, I've been sittin' alone diggin' up bones
+
+[Chorus]
+        C/G
+        I'm diggin' up bones, I'm diggin' up bones`
+            },
+            {
+                id: 'song11',
+                title: "Boot Scootin' Boogie",
+                artist: 'Brooks & Dunn',
+                category: 'new',
+                key: 'E',
+                progression: 'I-IV-V',
+                theory: 'Key: E | I-IV-V',
+                analysis: 'Pure 12-bar blues progression in E major (E-A-B). The shuffle rhythm and I-IV-V harmony create the quintessential honky-tonk dance floor energy.',
+                chords: `[Intro]
+E   E   E   E
+
+[Verse 1]
+E                             E
+  Out in the country past the city limits sign
+    A                          A                       E     E
+The joint starts jumpin' every night when the sun goes down
+         B               B
+They got whiskey, women, music and smoke
+
+[Chorus]
+      A                    A                     E
+Yeah, heel, toe, do-si-do, c'mon baby, let's go boot scootin'`
+            },
+            {
+                id: 'song12',
+                title: 'Friends in Low Places',
+                artist: 'Garth Brooks',
+                category: 'new',
+                key: 'A',
+                progression: 'I-ii-V',
+                theory: 'Key: A | I-#idim-ii-V',
+                analysis: 'Uses I-ii-V progression in A major with a chromatic passing chord (Bbdim). The A7 creates a brief tonicization to D. This progression gives it a walking bass feel.',
+                chords: `[Verse 1]
+         A
+Blame it all on my roots
+  Bbdim7
+I showed up in boots
+    Bm
+And ruined your black tie affair
+
+[Chorus]
+       A
+'Cause I got friends in low places
+          A
+Where the whiskey drowns and the beer chases
+    Bm
+My blues away`
+            },
+            {
+                id: 'song13',
+                title: 'A Country Boy Can Survive',
+                artist: 'Hank Williams Jr.',
+                category: 'new',
+                key: 'D',
+                progression: 'I-v-IV',
+                theory: 'Key: D | I-v-IV (modal)',
+                analysis: 'Modal mixture with Am7 (v from parallel minor) instead of A major. The bVII (C) and bIII (F) borrowed from D minor give it a defiant, hard-edged sound.',
+                chords: `[Verse 1]
+    D                          Am7
+The preacher man says it's the end of time
+        G                         D
+And the Mississippi River she's a-goin' dry
+        D                      Am7
+I got a shotgun, a rifle and a four wheel drive
+      G           Am7    D
+And a country boy can survive
+
+[Pre-Chorus]
+            G                           F
+Because you can't starve us out and you can't make us run`
+            },
+            {
+                id: 'song14',
+                title: 'Pickup Man',
+                artist: 'Joe Diffie',
+                category: 'new',
+                key: 'G',
+                progression: 'I-IV-V',
+                theory: 'Key: G | I-IV-V7',
+                analysis: 'Pure I-IV-V progression in G major (G-C-D). The D7 dominant seventh provides strong resolution. This is the DNA of rock and country music.',
+                chords: `[Verse 1]
+        G
+Well, I got my first truck when I was three
+       C
+Hauled marbles and rocks and thought twice before
+           G
+I hauled a Barbie Doll bed for the girl next door
+
+[Chorus]
+        C
+You can set my truck on fire and roll it down a hill
+      G
+And I still wouldn't trade it for a Coupe De Ville`
+            },
+            {
+                id: 'song15',
+                title: "Travelin' Soldier",
+                artist: 'Dixie Chicks',
+                category: 'chicks',
+                key: 'G',
+                progression: 'I-IV-bVII',
+                theory: 'Key: G | I-IV-bVII-vi-V',
+                analysis: 'Uses modal mixture with F (bVII) from G mixolydian. The progression G-C-F-Em-D creates an emotional, bittersweet quality perfect for the story.',
+                chords: `[Verse 1]
+    G
+Two days past eighteen
+    he was waiting for the bus in his army greens,
+         C
+    sat down in a booth in a café there,
+              G
+    gave his order to a girl with a bow in her hair.
+
+[Chorus]
+    Em      D      C
+    I...... cried, never gonna hold the hand of another guy,
+    G
+    too young for him they told her`
+            },
+            {
+                id: 'song16',
+                title: 'Wide Open Spaces',
+                artist: 'Dixie Chicks',
+                category: 'chicks',
+                key: 'D',
+                progression: 'I-IV-ii-V',
+                theory: 'Key: D | I-IV-ii-V',
+                analysis: 'Uses I-IV-ii-V (D-G-Em-A). The ii-V (Em-A) is a jazz-influenced progression that creates forward motion. Very effective for the "journey" theme of the song.',
+                chords: `[Verse 1]
+ D           G            D         G
+Who doesn't know what I'm talking about
+ D                G                  D
+Who's never left home, who's never struck out
+
+[Chorus]
+         D     Em    G    A  D        Em            G      A
+She needs wide open spaces    Room to make her big mistakes`
+            },
+            {
+                id: 'song17',
+                title: 'Cowboy Take Me Away',
+                artist: 'Dixie Chicks',
+                category: 'chicks',
+                key: 'F/Am',
+                progression: 'i-III-VII',
+                theory: 'Key: Am | i-III-V-VII (aeolian)',
+                analysis: 'Can be analyzed as Am (i-III-V-VII) or F major (I-iii-V). The modal ambiguity creates a dreamy, floating quality. Uses natural minor/aeolian mode extensively.',
+                chords: `[Verse]
+               Am    G      C
+I said I wanna touch the earth
+        Am       G     C
+I wanna break it in my hands
+        Am       G     C    F     G
+I wanna grow something wild and unruly
+
+[Chorus]
+       C    F   G
+Cowboy take me away
+                 Am
+Fly this girl as high as you can
+  F           G
+Into the wild blue`
+            }
+        ];
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('errorMessage');
+            const overlay = document.getElementById('passwordOverlay');
+
+            if (input.value === correctPassword) {
+                overlay.classList.add('hidden');
+                error.textContent = '';
+                populateSongList();
+            } else {
+                error.textContent = 'Incorrect password';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        window.onload = function() {
+            document.getElementById('passwordInput').focus();
+        };
+
+        function populateSongList() {
+            const songList = document.getElementById('songList');
+
+            const categories = {
+                favorites: 'Your Original Favorites',
+                new: 'New Additions',
+                chicks: 'Dixie Chicks'
+            };
+
+            let html = '';
+            for (let category in categories) {
+                const categorySongs = songs.filter(s => s.category === category);
+                html += `<div class="song-category">
+                    <div class="category-header">${categories[category]}</div>`;
+
+                categorySongs.forEach(song => {
+                    html += `
+                        <div class="song-item" onclick="selectSong('${song.id}')" data-progression="${song.progression}" data-key="${song.key}">
+                            <div class="song-item-title">${song.title}</div>
+                            <div class="song-item-artist">${song.artist}</div>
+                            <div class="song-item-theory">${song.theory}</div>
+                        </div>`;
+                });
+
+                html += `</div>`;
+            }
+
+            songList.innerHTML = html;
+        }
+
+        function selectSong(songId) {
+            const song = songs.find(s => s.id === songId);
+            if (!song) return;
+
+            // Update active state
+            document.querySelectorAll('.song-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Update header
+            document.getElementById('contentHeader').innerHTML = `
+                <h2>${song.title}</h2>
+                <span class="artist">${song.artist}</span>
+                <div class="theory-badge">${song.theory}</div>
+                <button class="print-btn visible" onclick="printSong()">🖨️ Print</button>
+            `;
+
+            // Update body
+            document.getElementById('contentBody').innerHTML = `
+                <div class="theory-analysis">
+                    <h4>🎼 Music Theory Analysis</h4>
+                    <p><strong>Key:</strong> ${song.key} major</p>
+                    <p><strong>Progression:</strong> ${song.progression}</p>
+                    <p>${song.analysis}</p>
+                </div>
+                <div class="chord-content">
+                    <pre>${song.chords}</pre>
+                </div>
+            `;
+
+            // Scroll to top
+            document.getElementById('contentBody').scrollTop = 0;
+        }
+
+        let currentFilters = {
+            progression: 'all',
+            key: 'all'
+        };
+
+        function filterSongs(filter, filterType) {
+            // Update filter state
+            currentFilters[filterType] = filter;
+
+            // Update button states for this filter type
+            document.querySelectorAll(`.filter-btn[data-filter-type="${filterType}"]`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Filter songs based on both filters
+            const songItems = document.querySelectorAll('.song-item');
+            songItems.forEach(item => {
+                let showItem = true;
+
+                // Check progression filter
+                if (currentFilters.progression !== 'all') {
+                    const progression = item.getAttribute('data-progression');
+                    if (!progression.includes(currentFilters.progression)) {
+                        showItem = false;
+                    }
+                }
+
+                // Check key filter
+                if (currentFilters.key !== 'all') {
+                    const key = item.getAttribute('data-key');
+                    if (!key.includes(currentFilters.key)) {
+                        showItem = false;
+                    }
+                }
+
+                item.style.display = showItem ? 'block' : 'none';
+            });
+
+            // Hide empty categories
+            document.querySelectorAll('.song-category').forEach(cat => {
+                const visibleSongs = cat.querySelectorAll('.song-item[style*="display: block"], .song-item:not([style*="display: none"])');
+                if (visibleSongs.length === 0) {
+                    cat.style.display = 'none';
+                } else {
+                    cat.style.display = 'block';
+                }
+            });
+        }
+
+        function showHome() {
+            // Clear active song
+            document.querySelectorAll('.song-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Reset filters
+            currentFilters = { progression: 'all', key: 'all' };
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.textContent.includes('All')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Show all songs
+            document.querySelectorAll('.song-item').forEach(item => {
+                item.style.display = 'block';
+            });
+            document.querySelectorAll('.song-category').forEach(cat => {
+                cat.style.display = 'block';
+            });
+
+            // Show welcome screen
+            document.getElementById('contentHeader').innerHTML = `
+                <h2>🌸 Welcome to Spring Frolic V</h2>
+                <span class="artist">Select a song to view chords & theory analysis</span>
+            `;
+
+            document.getElementById('contentBody').innerHTML = `
+                <div class="welcome-message">
+                    <h2>🎵 Music Theory Patterns</h2>
+                    <p>Click any song to see its chords and theory analysis</p>
+
+                    <div class="theory-summary">
+                        <h3>Common Progressions in This Collection:</h3>
+
+                        <div class="progression-group">
+                            <strong>I-IV-V (Classic Country)</strong><br>
+                            <small>10 songs use this or variations</small><br>
+                            • I Should Have Been a Cowboy<br>
+                            • Chattahoochee<br>
+                            • Family Tradition<br>
+                            • Boot Scootin' Boogie<br>
+                            • Pickup Man
+                        </div>
+
+                        <div class="progression-group">
+                            <strong>I-V-vi-IV (Modern Country/Pop)</strong><br>
+                            <small>3 songs use this progression</small><br>
+                            • Gone Country<br>
+                            • Drive (For Daddy Gene)<br>
+                            • I Love This Bar
+                        </div>
+
+                        <div class="progression-group">
+                            <strong>Modal Mixture (Borrowed Chords)</strong><br>
+                            <small>3 songs use chords from parallel minor</small><br>
+                            • How Do You Like Me Now (bVII)<br>
+                            • A Country Boy Can Survive (v)<br>
+                            • Travelin' Soldier (bVII)
+                        </div>
+
+                        <div class="progression-group">
+                            <strong>Keys Used:</strong><br>
+                            <small>G major: 7 songs | D major: 4 songs | C major: 3 songs</small><br>
+                            • Most songs use guitar-friendly open chord keys<br>
+                            • E and A major also appear (2 songs each)
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function printSong() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
