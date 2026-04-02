@@ -552,13 +552,18 @@
             }
 
             .song-packet {
-                page-break-after: always;
+                page-break-after: always !important;
+                break-after: page !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                display: block !important;
                 padding: 20px;
                 margin: 0;
             }
 
             .song-packet:last-child {
-                page-break-after: auto;
+                page-break-after: auto !important;
+                break-after: auto !important;
             }
 
             .content-header {
@@ -3587,8 +3592,9 @@ Rocky Mountain high,    Colorado . . .`
 
             songs.forEach((song, index) => {
                 const isLast = index === songs.length - 1;
+                const pageBreakStyle = isLast ? '' : 'page-break-after: always; break-after: page;';
                 allSongsHTML += `
-                    <div class="song-packet" style="padding: 30px 20px;">
+                    <div class="song-packet" style="padding: 30px 20px; ${pageBreakStyle}">
                         <div style="margin-bottom: 20px; border-bottom: 2px solid #2E8B57; padding-bottom: 10px;">
                             <h2 style="margin: 0 0 5px 0; color: #2E8B57;">${song.title}</h2>
                             <div style="color: #5BA3C7; font-size: 0.9em; margin-bottom: 5px;">${song.artist}</div>
@@ -3603,7 +3609,7 @@ Rocky Mountain high,    Colorado . . .`
             document.getElementById('contentHeader').innerHTML = '<h2 style="color: #2E8B57;">Complete Songbook - 25 Country Classics</h2>';
             document.getElementById('contentBody').innerHTML = allSongsHTML;
 
-            // Print
+            // Print after content renders
             setTimeout(() => {
                 window.print();
 
@@ -3611,8 +3617,8 @@ Rocky Mountain high,    Colorado . . .`
                 setTimeout(() => {
                     document.getElementById('contentHeader').innerHTML = currentView;
                     document.getElementById('contentBody').innerHTML = currentBody;
-                }, 100);
-            }, 100);
+                }, 500);
+            }, 300);
         }
 
     </script>
