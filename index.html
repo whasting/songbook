@@ -3646,22 +3646,6 @@ Rocky Mountain high,    Colorado . . .`
                 document.querySelector('.app-container').style.display = 'flex';
                 window.removeEventListener('afterprint', cleanup);
             });
-        });
-
-            // Update display
-            document.getElementById('contentHeader').innerHTML = '<h2 style="color: #2E8B57;">Complete Songbook - 25 Country Classics</h2>';
-            document.getElementById('contentBody').innerHTML = allSongsHTML;
-
-            // Print after content renders
-            setTimeout(() => {
-                window.print();
-
-                // Restore previous view after print dialog closes
-                setTimeout(() => {
-                    document.getElementById('contentHeader').innerHTML = currentView;
-                    document.getElementById('contentBody').innerHTML = currentBody;
-                }, 500);
-            }, 300);
         }
 
     </script>
