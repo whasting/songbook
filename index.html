@@ -580,6 +580,22 @@
                 display: none !important;
             }
         }
+
+        #printAllContainer {
+            display: none;
+        }
+
+        @media print {
+            #printAllContainer {
+                display: block !important;
+            }
+
+            #printAllContainer > div {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -3590,27 +3606,47 @@ Rocky Mountain high,    Colorado . . .`
         });
 
         function printAll() {
-            // Store current state
-            const currentView = document.getElementById('contentHeader').innerHTML;
-            const currentBody = document.getElementById('contentBody').innerHTML;
+            // Create a hidden print container
+            const printContainer = document.createElement('div');
+            printContainer.id = 'printAllContainer';
+            printContainer.style.display = 'none';
 
-            // Build print view with all songs
-            let allSongsHTML = '';
-
+            // Build all songs HTML
             songs.forEach((song, index) => {
-                const isLast = index === songs.length - 1;
-                const pageBreakStyle = isLast ? '' : 'page-break-after: always; break-after: page;';
-                allSongsHTML += `
-                    <div class="song-packet" style="padding: 30px 20px; ${pageBreakStyle}">
-                        <div style="margin-bottom: 20px; border-bottom: 2px solid #2E8B57; padding-bottom: 10px;">
-                            <h2 style="margin: 0 0 5px 0; color: #2E8B57;">${song.title}</h2>
-                            <div style="color: #5BA3C7; font-size: 0.9em; margin-bottom: 5px;">${song.artist}</div>
-                            <div style="color: #666; font-size: 0.85em;">${song.theory}</div>
-                        </div>
-                        <pre style="font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; font-size: 0.95em;">${song.chords}</pre>
+                const songDiv = document.createElement('div');
+                songDiv.style.pageBreakAfter = index < songs.length - 1 ? 'always' : 'auto';
+                songDiv.style.breakAfter = index < songs.length - 1 ? 'page' : 'auto';
+                songDiv.style.padding = '30px 20px';
+
+                songDiv.innerHTML = `
+                    <div style="margin-bottom: 20px; border-bottom: 2px solid #2E8B57; padding-bottom: 10px;">
+                        <h2 style="margin: 0 0 5px 0; color: #2E8B57;">${song.title}</h2>
+                        <div style="color: #5BA3C7; font-size: 0.9em; margin-bottom: 5px;">${song.artist}</div>
+                        <div style="color: #666; font-size: 0.85em;">${song.theory}</div>
                     </div>
+                    <pre style="font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; font-size: 0.95em;">${song.chords}</pre>
                 `;
+
+                printContainer.appendChild(songDiv);
             });
+
+            // Add to body
+            document.body.appendChild(printContainer);
+
+            // Show print container, hide main content
+            printContainer.style.display = 'block';
+            document.querySelector('.app-container').style.display = 'none';
+
+            // Print
+            window.print();
+
+            // Cleanup after print
+            window.addEventListener('afterprint', function cleanup() {
+                printContainer.remove();
+                document.querySelector('.app-container').style.display = 'flex';
+                window.removeEventListener('afterprint', cleanup);
+            });
+        });
 
             // Update display
             document.getElementById('contentHeader').innerHTML = '<h2 style="color: #2E8B57;">Complete Songbook - 25 Country Classics</h2>';
