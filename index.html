@@ -541,6 +541,33 @@
             .scroll-speed {
                 display: none !important;
             }
+
+            .sidebar {
+                display: none !important;
+            }
+
+            .main-content {
+                width: 100% !important;
+                margin: 0 !important;
+            }
+
+            .song-packet {
+                page-break-after: always;
+                padding: 20px;
+                margin: 0;
+            }
+
+            .song-packet:last-child {
+                page-break-after: auto;
+            }
+
+            .content-header {
+                margin-bottom: 20px;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -564,6 +591,7 @@
                 <h1>🌸 Spring Frolic V</h1>
                 <p>25 Country Classics for Spring 2026</p>
                 <button class="home-btn" onclick="showHome()">🏠 Home</button>
+                <button class="home-btn" onclick="printAll()">🖨️ Print All</button>
             </div>
 
             <div class="filter-row">
@@ -3548,6 +3576,45 @@ Rocky Mountain high,    Colorado . . .`
                 }
             });
         });
+
+        function printAll() {
+            // Store current state
+            const currentView = document.getElementById('contentHeader').innerHTML;
+            const currentBody = document.getElementById('contentBody').innerHTML;
+
+            // Build print view with all songs
+            let allSongsHTML = '';
+
+            songs.forEach((song, index) => {
+                const isLast = index === songs.length - 1;
+                allSongsHTML += `
+                    <div class="song-packet" style="padding: 30px 20px;">
+                        <div style="margin-bottom: 20px; border-bottom: 2px solid #2E8B57; padding-bottom: 10px;">
+                            <h2 style="margin: 0 0 5px 0; color: #2E8B57;">${song.title}</h2>
+                            <div style="color: #5BA3C7; font-size: 0.9em; margin-bottom: 5px;">${song.artist}</div>
+                            <div style="color: #666; font-size: 0.85em;">${song.theory}</div>
+                        </div>
+                        <pre style="font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; font-size: 0.95em;">${song.chords}</pre>
+                    </div>
+                `;
+            });
+
+            // Update display
+            document.getElementById('contentHeader').innerHTML = '<h2 style="color: #2E8B57;">Complete Songbook - 25 Country Classics</h2>';
+            document.getElementById('contentBody').innerHTML = allSongsHTML;
+
+            // Print
+            setTimeout(() => {
+                window.print();
+
+                // Restore previous view after print dialog closes
+                setTimeout(() => {
+                    document.getElementById('contentHeader').innerHTML = currentView;
+                    document.getElementById('contentBody').innerHTML = currentBody;
+                }, 100);
+            }, 100);
+        }
+
     </script>
 
 </body>
