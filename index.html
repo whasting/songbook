@@ -3637,15 +3637,29 @@ Rocky Mountain high,    Colorado . . .`
             printContainer.style.display = 'block';
             document.querySelector('.app-container').style.display = 'none';
 
+            // Cleanup function
+            const cleanup = () => {
+                if (printContainer && printContainer.parentNode) {
+                    printContainer.remove();
+                }
+                const appContainer = document.querySelector('.app-container');
+                if (appContainer) {
+                    appContainer.style.display = 'flex';
+                }
+            };
+
             // Print
             window.print();
 
-            // Cleanup after print
-            window.addEventListener('afterprint', function cleanup() {
-                printContainer.remove();
-                document.querySelector('.app-container').style.display = 'flex';
-                window.removeEventListener('afterprint', cleanup);
-            });
+            // Cleanup immediately after print dialog (works on cancel too)
+            setTimeout(cleanup, 100);
+
+            // Also listen for afterprint as backup
+            const afterPrintHandler = () => {
+                cleanup();
+                window.removeEventListener('afterprint', afterPrintHandler);
+            };
+            window.addEventListener('afterprint', afterPrintHandler);
         }
 
     </script>
